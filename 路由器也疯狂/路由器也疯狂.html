@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>路由器也疯狂</title>
+<!-- 2014-11-15 六 09:50 -->
+<meta  charset="utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="viewport" content="width=1024" />
+<meta  name="apple-mobile-web-app-capable" content="yes" />
+<meta  name="author" content="王鹿鸣 郝泽锟" />
+<meta  name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com."
+ />
+<link  href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+<link  rel="shortcut icon" href="favicon.png" />
+<link  rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link  rel="stylesheet" href="resources/css/impress-demo.css" type="text/css" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="resources/css/mystyle.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+<div id="impress">
+<div id="title" class="step" data-x="0" data-y="0" data-scale="1">
+<h1>路由器也疯狂</h1>
+<div id="postamble" class="status">
+<p class="author">Author: 王鹿鸣 郝泽锟</p>
+<p class="date">Created: 2014-11-15 六 09:50</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</div>
+<div id="table-of-contents" class="step slide"  data-x="1087.43824796" data-y="0.00000000" data-z="-259.76538813" data-scale="1.00000000" data-rotate-x="-0.00000000" data-rotate-y="40.00000000" data-rotate-z="-0.00000000">
+<h1>Table of Contents</h1>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/outline-container-sec-1">路由器 VS PC</a></li>
+<li><a href="#/outline-container-sec-2">OpenWRT来了</a></li>
+<li><a href="#/outline-container-sec-3">有了它我们可以bulabula^_^</a></li>
+<li><a href="#/outline-container-sec-4">安装OpenWrt</a></li>
+<li><a href="#/outline-container-sec-5">安装OpenWrt</a></li>
+<li><a href="#/outline-container-sec-6">安装软件了～～</a></li>
+<li><a href="#/outline-container-sec-7">扩展储存空间</a></li>
+<li><a href="#/outline-container-sec-8">扩展储存空间2——U盘自动挂载</a></li>
+<li><a href="#/outline-container-sec-9">小应用——未来花园做种</a></li>
+<li><a href="#/outline-container-sec-10">小应用——未来花园做种(2)</a></li>
+<li><a href="#/outline-container-sec-11">小应用——展示页面</a></li>
+<li><a href="#/outline-container-sec-12">下集预告～～～</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-1 step slide"  data-x="1753.49030214" data-y="0.00000000" data-z="-1157.74905231" data-rotate-x="-0.00000000" data-rotate-y="80.00000000" data-rotate-z="-0.00000000">
+<h1 id="sec-1">路由器 VS PC</h1>
+<div class="outline-text-2" id="text-1">
+
+<table>
+
+
+<colgroup>
+<col  class="left">
+
+<col  class="left">
+
+<col  class="left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">&#xa0;</th>
+<th scope="col" class="left">路由器</th>
+<th scope="col" class="left">PC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">CPU</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+</tr>
+
+<tr>
+<td class="left">内存</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+</tr>
+
+<tr>
+<td class="left">存储</td>
+<td class="left">Yes</td>
+<td class="left">Yes</td>
+</tr>
+
+<tr>
+<td class="left">显示</td>
+<td class="left">通过网络远程连接</td>
+<td class="left">显示器</td>
+</tr>
+
+<tr>
+<td class="left">操作系统</td>
+<td class="left">原厂系统无法玩耍</td>
+<td class="left">可以玩耍^_^</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+所以——OpenWRT来了
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-1 step slide"  data-x="2253.49030214" data-y="0.00000000" data-z="-2157.74905231" data-rotate-x="-0.00000000" data-rotate-y="90.00000000" data-rotate-z="-0.00000000">
+<h1 id="sec-2">OpenWRT来了</h1>
+<div class="outline-text-2" id="text-2">
+<pre class="example">
+ _______                     ________        __
+|       |.-----.-----.-----.|  |  |  |.----.|  |_
+|   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
+|_______||   __|_____|__|__||________||__|  |____|
+         |__| W I R E L E S S   F R E E D O M
+</pre>
+
+<p>
+OpenWrt是一个用于嵌入式设备的Linux发行版。
+</p>
+<ul class="org-ul">
+<li>完全可定制(the ability for full customization)
+</li>
+<li>自由软件(free software)
+</li>
+</ul>
+
+<p>
+以上这些意味着，OpenWrt使你拥有了一个
+</p>
+<ul class="org-ul">
+<li>强大的 嵌入式操作系统
+</li>
+<li>可以随意摆弄的 嵌入式操作系统
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-1 step slide"  data-x="2753.49030214" data-y="-342.02014333" data-z="-3097.44167309" data-rotate-x="-0.00000000" data-rotate-y="90.00000000" data-rotate-z="-20.00000000">
+<h1 id="sec-3">有了它我们可以bulabula^_^</h1>
+<div class="outline-text-2" id="text-3">
+
+<p>
+有了它我们可以用路由器:
+</p>
+<ul class="org-ul">
+<li>挂BT下载（未来花园之类的呦～）
+</li>
+<li>翻 [和谐] 墙（通过goagent）
+</li>
+<li>搭个人博客
+</li>
+<li>文件服务器
+</li>
+<li>网络摄像头
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-1 step slide"  data-x="2493.72491401" data-y="-713.94592875" data-z="-4119.29937026" data-rotate-x="160.00000000" data-rotate-y="50.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-4">安装OpenWrt</h1>
+<div class="outline-text-2" id="text-4">
+<p>
+设备要求
+</p>
+<ul class="org-ul">
+<li>查询设备型号
+</li>
+<li>上官网查询设备是否被OpenWrt支持
+<ul class="org-ul">
+<li><a href="http://wiki.openwrt.org/toh/start">http://wiki.openwrt.org/toh/start</a> (请使用非Firefox浏览器打开)
+</li>
+</ul>
+</li>
+<li>下载对应固件
+<ul class="org-ul">
+<li><a href="http://downloads.openwrt.org/barrier_breaker/14.07/">http://downloads.openwrt.org/barrier_breaker/14.07/</a>
+</li>
+<li>xxx-factory.bin(用于替换原厂固件)
+</li>
+<li>xxx-sysupgrade.bin(用于升级已有OpenWrt固件)
+</li>
+</ul>
+</li>
+<li>上传固件
+</li>
+</ul>
+
+<p>
+部分设备可以通过硬改提升配置，达到刷机要求
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-1 step slide"  data-x="2621.55108108" data-y="-1093.82862282" data-z="-5163.01849424" data-rotate-x="160.00000000" data-rotate-y="70.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-5">安装OpenWrt</h1>
+<div class="outline-text-2" id="text-5">
+<ol class="org-ol">
+<li>用一根网线将路由器和Lan口和电脑相连，电脑设置为DHCP
+</li>
+<li>打开命令行(cmd或terminal)
+<div class="org-src-container">
+
+<pre class="src src-shell">telnet 192.168.1.1
+passwd
+exit
+</pre>
+</div>
+</li>
+<li>通过ssh连接路由器进入OpenWrt
+<div class="org-src-container">
+
+<pre class="src src-shell">vi /etc/config/network
+</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-1 step slide"  data-x="2829.39476124" data-y="-2002.54222384" data-z="-5780.30335225" data-rotate-x="160.00000000" data-rotate-y="70.00000000" data-rotate-z="140.00000000">
+<h1 id="sec-6">安装软件了～～</h1>
+<div class="outline-text-2" id="text-6">
+<p>
+首先，让我们先搞个图形界面吧
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">opkg update
+opkg install luci
+opkg install luci-i18n-chinese
+</pre>
+</div>
+<p>
+有了图形界面，我们玩耍起来就更容易了～～
+</p>
+
+<p>
+下一个问题——储存空间
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-1 step slide"  data-x="3220.00487969" data-y="-2843.94341555" data-z="-6404.37688154" data-rotate-x="-172.21339405" data-rotate-y="76.14691446" data-rotate-z="113.33638072">
+<h1 id="sec-7">扩展储存空间</h1>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>路由器FLASH一般大小为4M，实在安装不了太多软件。
+</li>
+<li>TL-WR703N等3G路由一般有一个用于插3G卡的USB插口。
+</li>
+</ul>
+<p>
+于是——我们来插个U盘作为路由额外的储存空间吧！
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">opkg install kmod-usb-storage kmod-usb-ohci kmod-usb2 kmod-usb-uhci
+opkg install kmod-fs-ext4
+</pre>
+</div>
+<p>
+格式化U盘为EXT4
+</p>
+<ul class="org-ul">
+<li>想使用路由器格式化U盘需要额外安装e2fsprogs
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-shell">mkfs.ext4 /dev/sda1
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-1 step slide"  data-x="3781.51294563" data-y="-3592.46664850" data-z="-7016.27692372" data-rotate-x="-128.88172123" data-rotate-y="76.56457307" data-rotate-z="71.11827877">
+<h1 id="sec-8">扩展储存空间2——U盘自动挂载</h1>
+<div class="outline-text-2" id="text-8">
+<ol class="org-ol">
+<li>安装些必备工具
+<div class="org-src-container">
+
+<pre class="src src-shell">opkg install block-mount
+</pre>
+</div>
+</li>
+<li>自动探测
+<div class="org-src-container">
+
+<pre class="src src-shell">block detect &gt; /etc/config/fstab
+</pre>
+</div>
+</li>
+<li>配置
+<div class="org-src-container">
+
+<pre class="src src-fstab">/etc/config/fstab
+option enabled 1
+</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-1 step slide"  data-x="4332.82857273" data-y="-4481.42051786" data-z="-7411.00733484" data-rotate-x="19.11627433" data-rotate-y="72.22215386" data-rotate-z="-75.74330345">
+<h1 id="sec-9">小应用——未来花园做种</h1>
+<div class="outline-text-2" id="text-9">
+<p>
+安装transmission
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">opkg install transmission-daemon luci-app-transmission
+</pre>
+</div>
+<p>
+安装控制界面
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">opkg install transmission-cli
+opkg install transmission-web
+opkg install transmission-remote
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-1 step slide"  data-x="4851.21750361" data-y="-5416.05967334" data-z="-7739.21849460" data-rotate-x="24.41658499" data-rotate-y="62.42357450" data-rotate-z="-80.65228993">
+<h1 id="sec-10">小应用——未来花园做种(2)</h1>
+<div class="outline-text-2" id="text-10">
+<p>
+挂载usb储存设备（做种用的大容量移动硬盘）
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">cd /mnt
+mkdir usbstorage
+mount /dev/sda1 usbstorage
+</pre>
+</div>
+
+<p>
+在LUCI中调整transmission的默认下载目录和默认配置文件目录到usbstorage
+进入web控制界面下载吧～～
+</p>
+<div class="org-src-container">
+
+<pre class="src src-language">http://192.168.1.1:9091/transmission/web/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-1 step slide"  data-x="4875.75638915" data-y="-6339.54007518" data-z="-8368.96589674" data-rotate-x="80.72516080" data-rotate-y="53.63303071" data-rotate-z="-129.61447367">
+<h1 id="sec-11">小应用——展示页面</h1>
+<div class="outline-text-2" id="text-11">
+<p>
+默认的网站目录是/www,安装了luci的话，则说明uhttpd正常运行
+</p>
+
+<p>
+上传你做好的页面文件到/www
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">scp &lt;your files&gt; root@192.168.1.1:/www
+</pre>
+</div>
+
+<p>
+之后浏览器中输入192.168.1.1/your_file.html就可以看到你的页面了～～
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-1 step slide"  data-x="4985.35885517" data-y="-7164.97263931" data-z="-9115.05461903" data-rotate-x="80.72516080" data-rotate-y="53.63303071" data-rotate-z="-119.61447367">
+<h1 id="sec-12">下集预告～～～</h1>
+<div class="outline-text-2" id="text-12">
+<p>
+请大家访问下192.168.1.1/t.php?name=yourname
+之后可以跟任意XXX=xx形式的东西，用&amp;&amp;连接。
+</p>
+</div>
+</div>
+</div>
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) {
+document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="resources/js/impress.js"></script>
+<script>impress().init();</script>
+</body>
+</html>

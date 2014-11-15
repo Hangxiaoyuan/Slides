@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>C程序调试技术</title>
+<!-- 2014-11-15 六 13:30 -->
+<meta  charset="utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="viewport" content="width=1024" />
+<meta  name="apple-mobile-web-app-capable" content="yes" />
+<meta  name="author" content="王鹿鸣" />
+<meta  name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com."
+ />
+<link  href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+<link  rel="shortcut icon" href="favicon.png" />
+<link  rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link  rel="stylesheet" href="resources/css/impress-demo.css" type="text/css" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="resources/css/mystyle.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+<div id="impress">
+<div id="title" class="step" data-x="0" data-y="0" data-scale="1">
+<h1>C程序调试技术</h1>
+<div id="postamble" class="status">
+<p class="author">Author: 王鹿鸣</p>
+<p class="date">Created: 2014-11-15 六 13:30</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</div>
+<div id="table-of-contents" class="step slide"  data-x="1087.43824796" data-y="0.00000000" data-z="-259.76538813" data-scale="1.00000000" data-rotate-x="-0.00000000" data-rotate-y="40.00000000" data-rotate-z="-0.00000000">
+<h1>Table of Contents</h1>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/outline-container-sec-1">调试技术的应用</a></li>
+<li><a href="#/outline-container-sec-2">环境</a></li>
+<li><a href="#/outline-container-sec-3">小资料——GNU Project</a></li>
+<li><a href="#/outline-container-sec-4">Code::Blocks(1)断点</a></li>
+<li><a href="#/outline-container-sec-5">Code::Blocks(2)断点设置技巧</a></li>
+<li><a href="#/outline-container-sec-6">Code::Blocks(3)观察变量</a></li>
+<li><a href="#/outline-container-sec-7">重量级工具GDB登场！</a></li>
+<li><a href="#/outline-container-sec-8">GDB(1)准备工作</a></li>
+<li><a href="#/outline-container-sec-9">GDB(2)还是准备工作=_=#</a></li>
+<li><a href="#/outline-container-sec-10">GDB(3)显示源代码及设置断点</a></li>
+<li><a href="#/outline-container-sec-11">GDB(4)各种查看。。。</a></li>
+<li><a href="#/outline-container-sec-12">GDB(5)反向调试</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-1 step slide"  data-x="1753.49030214" data-y="0.00000000" data-z="-1157.74905231" data-rotate-x="-0.00000000" data-rotate-y="80.00000000" data-rotate-z="-0.00000000">
+<h1 id="sec-1">调试技术的应用</h1>
+<div class="outline-text-2" id="text-1">
+
+<p>
+调试技术一般有以下两个用途：
+</p>
+<ol class="org-ol">
+<li>处理错误
+<ul class="org-ul">
+<li>快速定位错误位置
+</li>
+<li>找到无法目测出来的错误原因
+</li>
+</ul>
+</li>
+<li>理解程序
+<ul class="org-ul">
+<li>跟踪程序运行轨迹
+</li>
+<li>观察数据变化
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-1 step slide"  data-x="2253.49030214" data-y="0.00000000" data-z="-2157.74905231" data-rotate-x="-0.00000000" data-rotate-y="90.00000000" data-rotate-z="-0.00000000">
+<h1 id="sec-2">环境</h1>
+<div class="outline-text-2" id="text-2">
+
+<ol class="org-ol">
+<li>调试环境
+<ul class="org-ul">
+<li>学校推荐：VC6.0
+专有软件，买不起啊买不起
+</li>
+<li>建议环境：Code::Blocks
+自由软件，可以自由获取、使用甚至重新发布。
+问题：部分机器上配置起来比VC6复杂
+</li>
+<li>专业环境：GCC+GDB
+自由软件，功能强悍。Code::Blocks后端之一。
+命令行界面，有一定上手难度
+</li>
+</ul>
+</li>
+<li>本次课程
+<ul class="org-ul">
+<li>Code::Blocks
+</li>
+<li>GDB
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-1 step slide"  data-x="3065.35675585" data-y="0.00000000" data-z="-2926.43160143" data-rotate-x="-0.00000000" data-rotate-y="70.00000000" data-rotate-z="-0.00000000">
+<h1 id="sec-3">小资料——GNU Project</h1>
+<div class="outline-text-2" id="text-3">
+<p>
+GNU计划，又称革奴计划，是由Richard Stallman在1983年发起,它的目标是创建一套完全自由的操作系统。
+</p>
+
+<p>
+自由软件尊重使用者研究、使用、分发、修改软件的自由。
+</p>
+
+<p>
+强大的GDB调试器是GNU Project的众多产品之一。对GNU Project有兴趣的话可以安装一个GNU/Linux来体验一下使用自由软件的感觉。
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-1 step slide"  data-x="3193.18292292" data-y="0.00000000" data-z="-4037.13429388" data-rotate-x="-180.00000000" data-rotate-y="70.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-4">Code::Blocks(1)断点</h1>
+<div class="outline-text-2" id="text-4">
+<ol class="org-ol">
+<li>断点类型
+<ul class="org-ul">
+<li>break point
+在某一行代码或某一个函数处暂停
+</li>
+<li>watch point
+当数据被读取、写入或读写时暂停
+</li>
+</ul>
+</li>
+<li>设置中断条件
+<ul class="org-ul">
+<li>count
+断点经过count次后中断
+</li>
+<li>条件
+当条件成立时中断
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-1 step slide"  data-x="2933.41753479" data-y="0.00000000" data-z="-5124.57254184" data-rotate-x="-180.00000000" data-rotate-y="50.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-5">Code::Blocks(2)断点设置技巧</h1>
+<div class="outline-text-2" id="text-5">
+<p>
+可以优先考虑在以下位置设置断点
+</p>
+<ul class="org-ul">
+<li>代码思路混乱处
+</li>
+<li>函数入口
+<ul class="org-ul">
+<li>子函数
+</li>
+<li>main函数*
+</li>
+</ul>
+</li>
+<li>分段排查
+<ul class="org-ul">
+<li>确认输入正确性
+</li>
+<li>确认输出前数据正确性
+</li>
+<li>确认计算过程的每个大阶段正确性
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-1 step slide"  data-x="2035.43387062" data-y="0.00000000" data-z="-5790.62459601" data-rotate-x="-180.00000000" data-rotate-y="10.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-6">Code::Blocks(3)观察变量</h1>
+<div class="outline-text-2" id="text-6">
+<p>
+未定义的话，调试器会自动分析变量类型，适用于一般情况。
+需要时，可以强行设置变量类型。
+变量类型
+</p>
+<ul class="org-ul">
+<li>unsigned 无符号整数
+</li>
+<li>signed   有符号整数
+</li>
+<li>char     字符
+</li>
+<li>更多功能自行挖掘^_^
+</li>
+</ul>
+<p>
+还可以设置成array，也就是数组
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-1 step slide"  data-x="1035.43387062" data-y="0.00000000" data-z="-6290.62459601" data-rotate-x="-180.00000000" data-rotate-y="0.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-7">重量级工具GDB登场！</h1>
+<div class="outline-text-2" id="text-7">
+
+<p>
+GDB是由GNU开发的强力调试工具(不过只有命令行界面=_=#)
+</p>
+
+<p>
+特性:
+</p>
+<ul class="org-ul">
+<li>断点
+</li>
+<li>变量查看
+</li>
+<li>[重量级功能]反向调试(Reverse Debugging)
+</li>
+</ul>
+
+<p>
+VC6和Code::Blocks均不支持哦^_^
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-1 step slide"  data-x="137.45020644" data-y="0.00000000" data-z="-6956.67665019" data-rotate-x="-180.00000000" data-rotate-y="10.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-8">GDB(1)准备工作</h1>
+<div class="outline-text-2" id="text-8">
+<p>
+安装GDB
+</p>
+<ol class="org-ol">
+<li>windows:
+<ol class="org-ol">
+<li>下载MinGW并安装
+</li>
+<li>设置环境变量
+</li>
+<li>上述内容可以百度一下教程，很简单呦
+</li>
+</ol>
+</li>
+<li>Linux:
+<ol class="org-ol">
+<li>deb系: sudo apt-get install gdb
+</li>
+<li>rpm系: sudo yum install gdb
+</li>
+<li>其他: 自立更生吧～～
+</li>
+</ol>
+</li>
+<li>MacOSX:
+<ol class="org-ol">
+<li>表示没用过。。。也自力更生吧。。。
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-1 step slide"  data-x="-934.18163541" data-y="0.00000000" data-z="-7275.43234903" data-rotate-x="-180.00000000" data-rotate-y="-10.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-9">GDB(2)还是准备工作=_=#</h1>
+<div class="outline-text-2" id="text-9">
+<p>
+手工编译程序为调试模式
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">gcc -o test.exe test.c -ggdb -Wall
+</pre>
+</div>
+<p>
+这样之后，就可以使用GDB进行调试了。
+注意，-Wall选项的意思是打开所有警告，便于发现潜在错误。
+</p>
+
+<p>
+运行GDB进行调试
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">gdb test.exe
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-1 step slide"  data-x="-2050.20703919" data-y="0.00000000" data-z="-7208.44505092" data-rotate-x="-180.00000000" data-rotate-y="-30.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-10">GDB(3)显示源代码及设置断点</h1>
+<div class="outline-text-2" id="text-10">
+<p>
+显示源代码:list 简写作l
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">(gdb) l
+</pre>
+</div>
+<p>
+设置断点:break 简写作b
+</p>
+<div class="org-src-container">
+
+<pre class="src src-shell">(gdb) b main
+(gdb) b 17
+(gdb) b 17 if i==3
+</pre>
+</div>
+<ul class="org-ul">
+<li>注意：断点设置在函数上时，可以通过按两下TAB键补齐
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-1 step slide"  data-x="-3160.90973164" data-y="0.00000000" data-z="-7336.27121798" data-rotate-x="-180.00000000" data-rotate-y="-20.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-11">GDB(4)各种查看。。。</h1>
+<div class="outline-text-2" id="text-11">
+<p>
+观察点(WatchPoint)
+watch &lt;expr&gt;
+</p>
+<ul class="org-ul">
+<li>为表达式expr设置一个观察点，值发生变化时中断
+</li>
+</ul>
+<p>
+rwatch &lt;expr&gt;
+</p>
+<ul class="org-ul">
+<li>为表达式expr设置一个读取观察点，当读取时暂停
+</li>
+</ul>
+<p>
+各种显示变量的方法
+</p>
+<div class="org-src-container">
+
+<pre class="src src-gdb">(gdb) display
+(gdb) print &lt;expr&gt;
+(gdb) print *array@len
+(gdb) info locals
+(gdb) info args
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-1 step slide"  data-x="-4232.54157349" data-y="0.00000000" data-z="-7655.02691682" data-rotate-x="-180.00000000" data-rotate-y="-10.00000000" data-rotate-z="-180.00000000">
+<h1 id="sec-12">GDB(5)反向调试</h1>
+<div class="outline-text-2" id="text-12">
+<p>
+首先要记录程序运行过程
+</p>
+<div class="org-src-container">
+
+<pre class="src src-gdb">(gdb) b main
+(gdb) record
+</pre>
+</div>
+<p>
+然后就可以反向运行了^_^
+</p>
+<div class="org-src-container">
+
+<pre class="src src-gdb">(gdb) reverse-next
+(gdb) reverse-step
+(gdb) reverse-continue
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) {
+document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="resources/js/impress.js"></script>
+<script>impress().init();</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+#+TITLE: C程序调试技术
+#+AUTHOR: 王鹿鸣
+#+OPTIONS: num:nil ^:nil
+#+IMPRESSJS_STYLE: resources/css/impress-demo.css
+#+IMPRESSJS_SRC: resources/js/impress.js
+#+HTML_HEAD: <link rel="stylesheet" href="resources/css/mystyle.css" type="text/css" />
+#+IMPRESSJS_TOC: trans-x:1000 trans-z:500 rotate-y:40 class:slide
+* 调试技术的应用
+  :PROPERTIES:
+  :rotate-y: 40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+
+  调试技术一般有以下两个用途：
+  1. 处理错误
+     + 快速定位错误位置
+     + 找到无法目测出来的错误原因
+  2. 理解程序
+     + 跟踪程序运行轨迹
+     + 观察数据变化
+* 环境
+  :PROPERTIES:
+  :rotate-y: 10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+
+  1. 调试环境
+     + 学校推荐：VC6.0
+        专有软件，买不起啊买不起
+     + 建议环境：Code::Blocks
+        自由软件，可以自由获取、使用甚至重新发布。
+        问题：部分机器上配置起来比VC6复杂
+     + 专业环境：GCC+GDB
+        自由软件，功能强悍。Code::Blocks后端之一。
+        命令行界面，有一定上手难度
+  2. 本次课程
+     + Code::Blocks
+     + GDB
+* 小资料——GNU Project
+  :PROPERTIES:
+  :rotate-y: -20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  GNU计划，又称革奴计划，是由Richard Stallman在1983年发起,它的目标是创建一套完全自由的操作系统。
+
+  自由软件尊重使用者研究、使用、分发、修改软件的自由。
+
+  强大的GDB调试器是GNU Project的众多产品之一。对GNU Project有兴趣的话可以安装一个GNU/Linux来体验一下使用自由软件的感觉。
+
+* Code::Blocks(1)断点
+  :PROPERTIES:
+  :rotate-y: 40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  1. 断点类型
+     + break point
+       在某一行代码或某一个函数处暂停
+     + watch point
+       当数据被读取、写入或读写时暂停
+  2. 设置中断条件
+     + count
+       断点经过count次后中断
+     + 条件
+       当条件成立时中断
+
+* Code::Blocks(2)断点设置技巧
+  :PROPERTIES:
+  :rotate-y: 20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  可以优先考虑在以下位置设置断点
+  + 代码思路混乱处
+  + 函数入口
+    + 子函数
+    + main函数*
+  + 分段排查
+    + 确认输入正确性
+    + 确认输出前数据正确性
+    + 确认计算过程的每个大阶段正确性
+
+* Code::Blocks(3)观察变量
+  :PROPERTIES:
+  :rotate-y: 40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  未定义的话，调试器会自动分析变量类型，适用于一般情况。
+  需要时，可以强行设置变量类型。
+  变量类型
+  + unsigned 无符号整数
+  + signed   有符号整数
+  + char     字符
+  + 更多功能自行挖掘^_^
+  还可以设置成array，也就是数组
+
+* 重量级工具GDB登场！
+  :PROPERTIES:
+  :rotate-y: 10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+
+  GDB是由GNU开发的强力调试工具(不过只有命令行界面=_=#)
+
+  特性:
+  + 断点
+  + 变量查看
+  + [重量级功能]反向调试(Reverse Debugging)
+
+  VC6和Code::Blocks均不支持哦^_^
+
+* GDB(1)准备工作
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  安装GDB
+  1. windows:
+     1) 下载MinGW并安装
+     2) 设置环境变量
+     3) 上述内容可以百度一下教程，很简单呦
+  2. Linux:
+     1) deb系: sudo apt-get install gdb
+     2) rpm系: sudo yum install gdb
+     3) 其他: 自立更生吧～～
+  3. MacOSX:
+     1) 表示没用过。。。也自力更生吧。。。
+
+* GDB(2)还是准备工作=_=#
+  :PROPERTIES:
+  :rotate-y: 20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  手工编译程序为调试模式
+  #+begin_src shell
+  gcc -o test.exe test.c -ggdb -Wall
+  #+end_src
+  这样之后，就可以使用GDB进行调试了。
+  注意，-Wall选项的意思是打开所有警告，便于发现潜在错误。
+
+  运行GDB进行调试
+  #+begin_src shell
+  gdb test.exe
+  #+end_src
+
+* GDB(3)显示源代码及设置断点
+  :PROPERTIES:
+  :rotate-y: 20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  显示源代码:list 简写作l
+  #+begin_src shell
+  (gdb) l
+  #+end_src
+  设置断点:break 简写作b
+  #+begin_src shell
+  (gdb) b main
+  (gdb) b 17
+  (gdb) b 17 if i==3
+  #+end_src
+  + 注意：断点设置在函数上时，可以通过按两下TAB键补齐
+
+* GDB(4)各种查看。。。
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  观察点(WatchPoint)
+  watch <expr>
+  + 为表达式expr设置一个观察点，值发生变化时中断
+  rwatch <expr>
+  + 为表达式expr设置一个读取观察点，当读取时暂停
+  各种显示变量的方法
+  #+begin_src gdb
+  (gdb) display
+  (gdb) print <expr>
+  (gdb) print *array@len
+  (gdb) info locals
+  (gdb) info args
+  #+end_src
+
+* GDB(5)反向调试
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  首先要记录程序运行过程
+  #+begin_src gdb
+  (gdb) b main
+  (gdb) record
+  #+end_src
+  然后就可以反向运行了^_^
+  #+begin_src gdb
+  (gdb) reverse-next
+  (gdb) reverse-step
+  (gdb) reverse-continue
+  #+end_src

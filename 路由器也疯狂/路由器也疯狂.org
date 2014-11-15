@@ -1,0 +1,209 @@
+#+TITLE: 路由器也疯狂
+#+AUTHOR: 王鹿鸣 郝泽锟
+#+OPTIONS: num:nil ^:nil
+#+IMPRESSJS_STYLE: resources/css/impress-demo.css
+#+IMPRESSJS_SRC: resources/js/impress.js
+#+HTML_HEAD: <link rel="stylesheet" href="resources/css/mystyle.css" type="text/css" />
+#+IMPRESSJS_TOC: trans-x:1000 trans-z:500 rotate-y:40 class:slide
+* 路由器 VS PC
+  :PROPERTIES:
+  :rotate-y: 40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+
+ |          | 路由器           | PC          |
+ |----------+------------------+-------------|
+ | CPU      | Yes              | Yes         |
+ | 内存   | Yes              | Yes         |
+ | 存储   | Yes              | Yes         |
+ | 显示     | 通过网络远程连接 | 显示器      |
+ | 操作系统 | 原厂系统无法玩耍 | 可以玩耍^_^ |
+
+ 所以——OpenWRT来了
+* OpenWRT来了
+  :PROPERTIES:
+  :rotate-y: 10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+ #+begin_src
+  _______                     ________        __
+ |       |.-----.-----.-----.|  |  |  |.----.|  |_
+ |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
+ |_______||   __|_____|__|__||________||__|  |____|
+          |__| W I R E L E S S   F R E E D O M
+ #+end_src
+
+ OpenWrt是一个用于嵌入式设备的Linux发行版。
+ + 完全可定制(the ability for full customization)
+ + 自由软件(free software)
+
+ 以上这些意味着，OpenWrt使你拥有了一个
+ + 强大的 嵌入式操作系统
+ + 可以随意摆弄的 嵌入式操作系统
+
+* 有了它我们可以bulabula^_^
+  :PROPERTIES:
+  :rotate-z: -20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+
+  有了它我们可以用路由器:
+  + 挂BT下载（未来花园之类的呦～）
+  + 翻 [和谐] 墙（通过goagent）
+  + 搭个人博客
+  + 文件服务器
+  + 网络摄像头
+
+* 安装OpenWrt
+  :PROPERTIES:
+  :rotate-y: 40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  设备要求
+  + 查询设备型号
+  + 上官网查询设备是否被OpenWrt支持
+    + http://wiki.openwrt.org/toh/start (请使用非Firefox浏览器打开)
+  + 下载对应固件
+    + http://downloads.openwrt.org/barrier_breaker/14.07/
+    + xxx-factory.bin(用于替换原厂固件)
+    + xxx-sysupgrade.bin(用于升级已有OpenWrt固件)
+  + 上传固件
+
+  部分设备可以通过硬改提升配置，达到刷机要求
+
+* 安装OpenWrt
+  :PROPERTIES:
+  :rotate-y: -20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  1. 用一根网线将路由器和Lan口和电脑相连，电脑设置为DHCP
+  2. 打开命令行(cmd或terminal)
+     #+begin_src shell
+     telnet 192.168.1.1
+     passwd
+     exit
+     #+end_src
+  3. 通过ssh连接路由器进入OpenWrt
+     #+begin_src shell
+     vi /etc/config/network
+     #+end_src
+
+* 安装软件了～～
+  :PROPERTIES:
+  :rotate-z: -40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  首先，让我们先搞个图形界面吧
+  #+begin_src shell
+  opkg update
+  opkg install luci
+  opkg install luci-i18n-chinese
+  #+end_src
+  有了图形界面，我们玩耍起来就更容易了～～
+
+  下一个问题——储存空间
+
+* 扩展储存空间
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  + 路由器FLASH一般大小为4M，实在安装不了太多软件。
+  + TL-WR703N等3G路由一般有一个用于插3G卡的USB插口。
+  于是——我们来插个U盘作为路由额外的储存空间吧！
+  #+begin_src shell
+  opkg install kmod-usb-storage kmod-usb-ohci kmod-usb2 kmod-usb-uhci
+  opkg install kmod-fs-ext4
+  #+end_src
+  格式化U盘为EXT4
+  + 想使用路由器格式化U盘需要额外安装e2fsprogs
+  #+begin_src shell
+  mkfs.ext4 /dev/sda1
+  #+end_src
+
+* 扩展储存空间2——U盘自动挂载
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  1. 安装些必备工具
+      #+begin_src shell
+      opkg install block-mount
+      #+end_src
+  2. 自动探测
+      #+begin_src shell
+      block detect > /etc/config/fstab
+      #+end_src
+  3. 配置
+     #+begin_src fstab
+     /etc/config/fstab
+     option enabled 1
+     #+end_src
+
+* 小应用——未来花园做种
+  :PROPERTIES:
+  :rotate-x: 30
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  安装transmission
+  #+begin_src shell
+  opkg install transmission-daemon luci-app-transmission
+  #+end_src
+  安装控制界面
+  #+begin_src shell
+  opkg install transmission-cli
+  opkg install transmission-web
+  opkg install transmission-remote
+  #+end_src
+
+* 小应用——未来花园做种(2)
+  :PROPERTIES:
+  :rotate-x: 10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  挂载usb储存设备（做种用的大容量移动硬盘）
+  #+begin_src shell
+  cd /mnt
+  mkdir usbstorage
+  mount /dev/sda1 usbstorage
+  #+end_src
+
+  在LUCI中调整transmission的默认下载目录和默认配置文件目录到usbstorage
+  进入web控制界面下载吧～～
+  #+begin_src language
+  http://192.168.1.1:9091/transmission/web/
+  #+end_src
+
+* 小应用——展示页面
+  :PROPERTIES:
+  :rotate-y: 30
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  默认的网站目录是/www,安装了luci的话，则说明uhttpd正常运行
+
+  上传你做好的页面文件到/www
+  #+begin_src shell
+  scp <your files> root@192.168.1.1:/www
+  #+end_src
+
+  之后浏览器中输入192.168.1.1/your_file.html就可以看到你的页面了～～
+
+* 下集预告～～～
+  :PROPERTIES:
+  :rotate-z: 10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  请大家访问下192.168.1.1/t.php?name=yourname
+  之后可以跟任意XXX=xx形式的东西，用&&连接。

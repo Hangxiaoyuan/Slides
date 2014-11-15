@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1415884315 source:/home/wlm/文档/大学/大二/工作/第二课堂/c程序调试课件/fordebug/main.c
+	<stdio.h>
+	<stdlib.h>
+
+1416030575 source:/home/wlm/文档/大学/大二/工作/Slides/c程序调试技术/fordebug/main.c
+	<stdio.h>
+	<stdlib.h>
+
