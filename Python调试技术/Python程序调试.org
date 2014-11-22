@@ -1,0 +1,213 @@
+#+TITLE: Python调试技术
+#+AUTHOR: 王鹿鸣
+#+OPTIONS: num:nil ^:nil
+#+IMPRESSJS_STYLE: resources/css/impress-demo.css
+#+IMPRESSJS_SRC: resources/js/impress.js
+#+HTML_HEAD: <link rel="stylesheet" href="resources/css/mystyle.css" type="text/css" />
+#+IMPRESSJS_TOC: trans-x:1000 trans-z:500 rotate-y:40 class:slide
+* 调试技术的应用
+  :PROPERTIES:
+  :rotate-x: 40
+  :trans-y:  1000
+  :trans-z:  500
+  :END:
+
+  调试技术一般有以下两个用途：
+  1. 处理错误
+     + 快速定位错误位置
+     + 找到无法目测出来的错误原因
+  2. 理解程序
+     + 跟踪程序运行轨迹
+     + 观察数据变化
+* 环境
+  :PROPERTIES:
+  :rotate-x: 40
+  :trans-y:  1000
+  :trans-z:  500
+  :END:
+
+  Python PDB模块
+  + 支持设置中断
+  + 支持源码级单步调试
+  + 查看堆栈内容
+  + 查看源码
+  + 计算任意当前堆栈中的代码
+  + 纯Python实现
+
+* PDB(1)启动并设置断点
+  :PROPERTIES:
+  :rotate-y: 40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  1. 在待调试的程序中添加断点
+
+     #+begin_src python
+     import pdb
+     pdb.set_trace()
+     #+end_src
+
+  2. 执行带调试的程序
+     #+begin_src shell
+     python demo.py
+     #+end_src
+
+* PDB(2)断点设置技巧
+  :PROPERTIES:
+  :rotate-x: -40
+  :trans-y:  -1000
+  :trans-z:  500
+  :END:
+  可以优先考虑在以下位置设置断点
+  + 程序第一条指令前(建议)
+  + 代码思路混乱处
+  + 函数入口
+  通过变量控制调试是否开启
+  #+begin_src python
+  DEBUG = true
+  if DEBUG==True:
+    import pdb
+    pdb.set_trace()
+  #+end_src
+
+* PDB(3)一般断点与临时断点
+  :PROPERTIES:
+  :rotate-z: 20
+  :trans-x:  1000
+  :trans-y:  500
+  :END:
+  1. 设置一般断点
+     #+begin_src python
+     (pdb) break 13
+     (pdb) break fib
+     #+end_src
+
+  2. 设置临时断点
+     + 临时断点的参数与一般断点相同
+     + 中断一次后自动删除
+     #+begin_src python
+     (pdb) tbreak 13
+     #+end_src
+
+* PDB(4)条件断点
+  :PROPERTIES:
+  :rotate-z: 10
+  :trans-x:  1000
+  :trans-y:  -500
+  :END:
+
+  条件断点
+  + 忽略一定次数
+       #+begin_src python
+       (pdb) ignore <bpnumber> 3
+       #+end_src
+  + 条件成立时中断
+       #+begin_src python
+       (pdb) condition <bpnumber> [condition]
+       #+end_src
+
+* PDB(5)断点使能(Enable)
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  设置断点使能(Enable)
+  + 开启断点
+       #+begin_src python
+       (pdb) enable <bpnumber> [bpnumber]
+       #+end_src
+  + 禁用断点
+       #+begin_src python
+       (pdb) disable <bpnumber> [bpnumber]
+       #+end_src
+
+* PDB(6)程序控制
+  :PROPERTIES:
+  :rotate-z: -10
+  :rotate-y: 30
+  :trans-x:  1000
+  :trans-y:  500
+  :END:
+  PDB支持单步执行、返回当前函数、继续执行等控制程序流程的指令
+  #+begin_src python
+  (pdb) continue
+  (pdb) next
+  (pdb) step
+  (pdb) return
+  (pdb) jump <lineno>
+  #+end_src
+
+* PDB(7)堆栈相关
+  :PROPERTIES:
+  :rotate-z: 20
+  :trans-x:  1000
+  :trans-y:  500
+  :END:
+  显示当前位置
+  #+begin_src python
+  (pdb) where
+  (pdb) bt
+  #+end_src
+  向上一层栈移动
+  #+begin_src python
+  (pdb) up
+  #+end_src
+  向下一层栈移动
+  #+begin_src python
+  (pdb) up
+  #+end_src
+
+* PDB(8)显示信息
+  :PROPERTIES:
+  :rotate-y: 20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  显示源代码
+  #+begin_src shell
+  (pdb) l
+  (pdb) ll
+  #+end_src
+  打印表达式
+  #+begin_src shell
+  (pdb) p n
+  (pdb) pp n
+  #+end_src
+
+* PDB(9)查询及交互
+  :PROPERTIES:
+  :rotate-y: -10
+  :rotate-x: 30
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  查看各种信息
+  #+begin_src python
+  (pdb) b
+  (pdb) display
+  (pdb) print <expr>
+  (pdb) retval
+  (pdb) args
+  #+end_src
+  执行Python指令
+  #+begin_src python
+  (pdb) !n=3
+  #+end_src
+
+
+* PDB(10)神奇的commands
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  每次中断时自动执行指令序列
+  #+begin_src python
+  (pdb) commands [bpnumber]
+  (com) ...
+  (com) ...
+  (com) end
+  (pdb)
+
+  #+end_src

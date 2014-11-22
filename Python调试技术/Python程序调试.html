@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>C程序调试技术</title>
-<!-- 2014-11-15 六 23:27 -->
+<title>Python调试技术</title>
+<!-- 2014-11-22 六 02:18 -->
 <meta  charset="utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="viewport" content="width=1024" />
@@ -149,10 +149,10 @@ for the JavaScript code in this tag.
 </div>
 <div id="impress">
 <div id="title" class="step" data-x="0" data-y="0" data-scale="1">
-<h1>C程序调试技术</h1>
+<h1>Python调试技术</h1>
 <div id="postamble" class="status">
 <p class="author">Author: 王鹿鸣</p>
-<p class="date">Created: 2014-11-15 六 23:27</p>
+<p class="date">Created: 2014-11-22 六 02:18</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
@@ -163,20 +163,20 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#/outline-container-sec-1">调试技术的应用</a></li>
 <li><a href="#/outline-container-sec-2">环境</a></li>
-<li><a href="#/outline-container-sec-3">小资料——GNU Project</a></li>
-<li><a href="#/outline-container-sec-4">Code::Blocks(1)断点</a></li>
-<li><a href="#/outline-container-sec-5">Code::Blocks(2)断点设置技巧</a></li>
-<li><a href="#/outline-container-sec-6">Code::Blocks(3)观察变量</a></li>
-<li><a href="#/outline-container-sec-7">重量级工具GDB登场！</a></li>
-<li><a href="#/outline-container-sec-8">GDB(1)准备工作</a></li>
-<li><a href="#/outline-container-sec-9">GDB(2)还是准备工作=_=#</a></li>
-<li><a href="#/outline-container-sec-10">GDB(3)显示源代码及设置断点</a></li>
-<li><a href="#/outline-container-sec-11">GDB(4)各种查看。。。</a></li>
-<li><a href="#/outline-container-sec-12">GDB(5)反向调试</a></li>
+<li><a href="#/outline-container-sec-3">PDB(1)启动并设置断点</a></li>
+<li><a href="#/outline-container-sec-4">PDB(2)断点设置技巧</a></li>
+<li><a href="#/outline-container-sec-5">PDB(3)一般断点与临时断点</a></li>
+<li><a href="#/outline-container-sec-6">PDB(4)条件断点</a></li>
+<li><a href="#/outline-container-sec-7">PDB(5)断点使能(Enable)</a></li>
+<li><a href="#/outline-container-sec-8">PDB(6)程序控制</a></li>
+<li><a href="#/outline-container-sec-9">PDB(7)堆栈相关</a></li>
+<li><a href="#/outline-container-sec-10">PDB(8)显示信息</a></li>
+<li><a href="#/outline-container-sec-11">PDB(9)查询及交互</a></li>
+<li><a href="#/outline-container-sec-12">PDB(10)神奇的commands</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-sec-1" class="outline-1 step slide"  data-x="1753.49030214" data-y="0.00000000" data-z="-1157.74905231" data-rotate-x="-0.00000000" data-rotate-y="80.00000000" data-rotate-z="-0.00000000">
+<div id="outline-container-sec-1" class="outline-1 step slide"  data-x="920.46427505" data-y="-1087.43824796" data-z="-458.75722022" data-rotate-x="47.60591396" data-rotate-y="29.49870423" data-rotate-z="-28.34077442">
 <h1 id="sec-1">调试技术的应用</h1>
 <div class="outline-text-2" id="text-1">
 
@@ -203,308 +203,277 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-2" class="outline-1 step slide"  data-x="2253.49030214" data-y="0.00000000" data-z="-2157.74905231" data-rotate-x="-0.00000000" data-rotate-y="90.00000000" data-rotate-z="-0.00000000">
+<div id="outline-container-sec-2" class="outline-1 step slide"  data-x="343.25150201" data-y="-1753.49030214" data-z="-1146.65261617" data-rotate-x="82.30737118" data-rotate-y="6.40864631" data-rotate-z="-39.56868696">
 <h1 id="sec-2">环境</h1>
 <div class="outline-text-2" id="text-2">
 
-<ol class="org-ol">
-<li>调试环境
+<p>
+Python PDB模块
+</p>
 <ul class="org-ul">
-<li>学校推荐：VC6.0
-专有软件，买不起啊买不起
+<li>支持设置中断
 </li>
-<li>建议环境：Code::Blocks
-自由软件，可以自由获取、使用甚至重新发布。
-问题：部分机器上配置起来比VC6复杂
+<li>支持源码级单步调试
 </li>
-<li>专业环境：GCC+GDB
-自由软件，功能强悍。Code::Blocks后端之一。
-命令行界面，有一定上手难度
+<li>查看堆栈内容
+</li>
+<li>查看源码
+</li>
+<li>计算任意当前堆栈中的代码
+</li>
+<li>纯Python实现
 </li>
 </ul>
-</li>
-<li>本次课程
-<ul class="org-ul">
-<li>Code::Blocks
-</li>
-<li>GDB
-</li>
-</ul>
-</li>
-</ol>
 </div>
 </div>
-<div id="outline-container-sec-3" class="outline-1 step slide"  data-x="3065.35675585" data-y="0.00000000" data-z="-2926.43160143" data-rotate-x="-0.00000000" data-rotate-y="70.00000000" data-rotate-z="-0.00000000">
-<h1 id="sec-3">小资料——GNU Project</h1>
+
+<div id="outline-container-sec-3" class="outline-1 step slide"  data-x="1147.28280299" data-y="-1497.67133394" data-z="-1880.19901727" data-rotate-x="112.42148847" data-rotate-y="35.30360068" data-rotate-z="-50.86547697">
+<h1 id="sec-3">PDB(1)启动并设置断点</h1>
 <div class="outline-text-2" id="text-3">
-<p>
-GNU计划，又称革奴计划，是由Richard Stallman在1983年发起,它的目标是创建一套完全自由的操作系统。
-</p>
-
-<p>
-自由软件尊重使用者研究、使用、分发、修改软件的自由。
-</p>
-
-<p>
-强大的GDB调试器是GNU Project的众多产品之一。对GNU Project有兴趣的话可以安装一个GNU/Linux来体验一下使用自由软件的感觉。
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-4" class="outline-1 step slide"  data-x="3193.18292292" data-y="0.00000000" data-z="-4037.13429388" data-rotate-x="-180.00000000" data-rotate-y="70.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-4">Code::Blocks(1)断点</h1>
-<div class="outline-text-2" id="text-4">
 <ol class="org-ol">
-<li>断点类型
-<ul class="org-ul">
-<li>break point
-在某一行代码或某一个函数处暂停
+<li>在待调试的程序中添加断点
+
+<div class="org-src-container">
+
+<pre class="src src-python">import pdb
+pdb.set_trace()
+</pre>
+</div>
 </li>
-<li>watch point
-当数据被读取、写入或读写时暂停
-</li>
-</ul>
-</li>
-<li>设置中断条件
-<ul class="org-ul">
-<li>count
-断点经过count次后中断
-</li>
-<li>条件
-当条件成立时中断
-</li>
-</ul>
+
+<li>执行带调试的程序
+<div class="org-src-container">
+
+<pre class="src src-shell">python demo.py
+</pre>
+</div>
 </li>
 </ol>
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-1 step slide"  data-x="2933.41753479" data-y="0.00000000" data-z="-5124.57254184" data-rotate-x="-180.00000000" data-rotate-y="50.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-5">Code::Blocks(2)断点设置技巧</h1>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-sec-4" class="outline-1 step slide"  data-x="1685.53464560" data-y="-1112.87096483" data-z="-978.97006199" data-rotate-x="62.13985864" data-rotate-y="58.16848872" data-rotate-z="-12.42158884">
+<h1 id="sec-4">PDB(2)断点设置技巧</h1>
+<div class="outline-text-2" id="text-4">
 <p>
 可以优先考虑在以下位置设置断点
 </p>
 <ul class="org-ul">
+<li>程序第一条指令前(建议)
+</li>
 <li>代码思路混乱处
 </li>
 <li>函数入口
-<ul class="org-ul">
-<li>子函数
-</li>
-<li>main函数*
 </li>
 </ul>
-</li>
-<li>分段排查
-<ul class="org-ul">
-<li>确认输入正确性
-</li>
-<li>确认输出前数据正确性
-</li>
-<li>确认计算过程的每个大阶段正确性
-</li>
-</ul>
-</li>
-</ul>
+<p>
+通过变量控制调试是否开启
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">DEBUG = true
+if DEBUG==True:
+  import pdb
+  pdb.set_trace()
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-1 step slide"  data-x="2035.43387062" data-y="0.00000000" data-z="-5790.62459601" data-rotate-x="-180.00000000" data-rotate-y="10.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-6">Code::Blocks(3)观察变量</h1>
+<div id="outline-container-sec-5" class="outline-1 step slide"  data-x="2243.12994562" data-y="-488.76106793" data-z="-1720.30286039" data-rotate-x="62.13985864" data-rotate-y="58.16848872" data-rotate-z="7.57841116">
+<h1 id="sec-5">PDB(3)一般断点与临时断点</h1>
+<div class="outline-text-2" id="text-5">
+<ol class="org-ol">
+<li>设置一般断点
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) break 13
+(pdb) break fib
+</pre>
+</div>
+</li>
+
+<li>设置临时断点
+<ul class="org-ul">
+<li>临时断点的参数与一般断点相同
+</li>
+<li>中断一次后自动删除
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) tbreak 13
+</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-1 step slide"  data-x="2666.28109350" data-y="477.74758730" data-z="-1350.43244333" data-rotate-x="62.13985864" data-rotate-y="58.16848872" data-rotate-z="17.57841116">
+<h1 id="sec-6">PDB(4)条件断点</h1>
 <div class="outline-text-2" id="text-6">
+
 <p>
-未定义的话，调试器会自动分析变量类型，适用于一般情况。
-需要时，可以强行设置变量类型。
-变量类型
+条件断点
 </p>
 <ul class="org-ul">
-<li>unsigned 无符号整数
+<li>忽略一定次数
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) ignore &lt;bpnumber&gt; 3
+</pre>
+</div>
 </li>
-<li>signed   有符号整数
-</li>
-<li>char     字符
-</li>
-<li>更多功能自行挖掘^_^
+<li>条件成立时中断
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) condition &lt;bpnumber&gt; [condition]
+</pre>
+</div>
 </li>
 </ul>
-<p>
-还可以设置成array，也就是数组
-</p>
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-1 step slide"  data-x="1035.43387062" data-y="0.00000000" data-z="-6290.62459601" data-rotate-x="-180.00000000" data-rotate-y="0.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-7">重量级工具GDB登场！</h1>
+<div id="outline-container-sec-7" class="outline-1 step slide"  data-x="3683.66232745" data-y="936.91320198" data-z="-1286.38275096" data-rotate-x="66.68267118" data-rotate-y="48.53721621" data-rotate-z="13.92000612">
+<h1 id="sec-7">PDB(5)断点使能(Enable)</h1>
 <div class="outline-text-2" id="text-7">
-
 <p>
-GDB是由GNU开发的强力调试工具(不过只有命令行界面=_=#)
-</p>
-
-<p>
-特性:
+设置断点使能(Enable)
 </p>
 <ul class="org-ul">
-<li>断点
+<li>开启断点
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) enable &lt;bpnumber&gt; [bpnumber]
+</pre>
+</div>
 </li>
-<li>变量查看
-</li>
-<li>[重量级功能]反向调试(Reverse Debugging)
+<li>禁用断点
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) disable &lt;bpnumber&gt; [bpnumber]
+</pre>
+</div>
 </li>
 </ul>
-
-<p>
-VC6和Code::Blocks均不支持哦^_^
-</p>
 </div>
 </div>
 
-<div id="outline-container-sec-8" class="outline-1 step slide"  data-x="137.45020644" data-y="0.00000000" data-z="-6956.67665019" data-rotate-x="-180.00000000" data-rotate-y="10.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-8">GDB(1)准备工作</h1>
+<div id="outline-container-sec-8" class="outline-1 step slide"  data-x="3953.09153072" data-y="1657.81310853" data-z="-2097.37672699" data-rotate-x="36.84832427" data-rotate-y="76.00845330" data-rotate-z="31.20955325">
+<h1 id="sec-8">PDB(6)程序控制</h1>
 <div class="outline-text-2" id="text-8">
 <p>
-安装GDB
+PDB支持单步执行、返回当前函数、继续执行等控制程序流程的指令
 </p>
-<ol class="org-ol">
-<li>windows:
-<ol class="org-ol">
-<li>下载MinGW并安装
-</li>
-<li>设置环境变量
-</li>
-<li>上述内容可以百度一下教程，很简单呦
-</li>
-</ol>
-</li>
-<li>Linux:
-<ol class="org-ol">
-<li>deb系: sudo apt-get install gdb
-</li>
-<li>rpm系: sudo yum install gdb
-</li>
-<li>其他: 自立更生吧～～
-</li>
-</ol>
-</li>
-<li>MacOSX:
-<ol class="org-ol">
-<li>表示没用过。。。也自力更生吧。。。
-</li>
-</ol>
-</li>
-</ol>
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) continue
+(pdb) next
+(pdb) step
+(pdb) return
+(pdb) jump &lt;lineno&gt;
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-sec-9" class="outline-1 step slide"  data-x="-934.18163541" data-y="0.00000000" data-z="-7275.43234903" data-rotate-x="-180.00000000" data-rotate-y="-10.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-9">GDB(2)还是准备工作=_=#</h1>
+<div id="outline-container-sec-9" class="outline-1 step slide"  data-x="4198.78589298" data-y="2622.21334571" data-z="-2606.85338287" data-rotate-x="36.84832427" data-rotate-y="76.00845330" data-rotate-z="51.20955325">
+<h1 id="sec-9">PDB(7)堆栈相关</h1>
 <div class="outline-text-2" id="text-9">
 <p>
-手工编译程序为调试模式
+显示当前位置
 </p>
 <div class="org-src-container">
 
-<pre class="src src-shell">gcc -o test.exe test.c -ggdb -Wall
+<pre class="src src-python">(pdb) where
+(pdb) bt
 </pre>
 </div>
 <p>
-这样之后，就可以使用GDB进行调试了。
-注意，-Wall选项的意思是打开所有警告，便于发现潜在错误。
-</p>
-
-<p>
-运行GDB进行调试
+向上一层栈移动
 </p>
 <div class="org-src-container">
 
-<pre class="src src-shell">gdb test.exe
+<pre class="src src-python">(pdb) up
+</pre>
+</div>
+<p>
+向下一层栈移动
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) up
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-10" class="outline-1 step slide"  data-x="-2050.20703919" data-y="0.00000000" data-z="-7208.44505092" data-rotate-x="-180.00000000" data-rotate-y="-30.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-10">GDB(3)显示源代码及设置断点</h1>
+<div id="outline-container-sec-10" class="outline-1 step slide"  data-x="4491.05561840" data-y="3701.36364873" data-z="-2603.24352262" data-rotate-x="-49.01341213" data-rotate-y="74.49741415" data-rotate-z="135.16474553">
+<h1 id="sec-10">PDB(8)显示信息</h1>
 <div class="outline-text-2" id="text-10">
 <p>
-显示源代码:list 简写作l
+显示源代码
 </p>
 <div class="org-src-container">
 
-<pre class="src src-shell">(gdb) l
+<pre class="src src-shell">(pdb) l
+(pdb) ll
 </pre>
 </div>
 <p>
-设置断点:break 简写作b
+打印表达式
 </p>
 <div class="org-src-container">
 
-<pre class="src src-shell">(gdb) b main
-(gdb) b 17
-(gdb) b 17 if i==3
+<pre class="src src-shell">(pdb) p n
+(pdb) pp n
 </pre>
 </div>
-<ul class="org-ul">
-<li>注意：断点设置在函数上时，可以通过按两下TAB键补齐
-</li>
-</ul>
 </div>
 </div>
 
-<div id="outline-container-sec-11" class="outline-1 step slide"  data-x="-3160.90973164" data-y="0.00000000" data-z="-7336.27121798" data-rotate-x="-180.00000000" data-rotate-y="-20.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-11">GDB(4)各种查看。。。</h1>
+<div id="outline-container-sec-11" class="outline-1 step slide"  data-x="4939.44432584" data-y="4680.30871599" data-z="-2904.26531972" data-rotate-x="176.17609208" data-rotate-y="71.36040821" data-rotate-z="-94.55548477">
+<h1 id="sec-11">PDB(9)查询及交互</h1>
 <div class="outline-text-2" id="text-11">
 <p>
-观察点(WatchPoint)
-watch &lt;expr&gt;
-</p>
-<ul class="org-ul">
-<li>为表达式expr设置一个观察点，值发生变化时中断
-</li>
-</ul>
-<p>
-rwatch &lt;expr&gt;
-</p>
-<ul class="org-ul">
-<li>为表达式expr设置一个读取观察点，当读取时暂停
-</li>
-</ul>
-<p>
-各种显示变量的方法
+查看各种信息
 </p>
 <div class="org-src-container">
 
-<pre class="src src-gdb">(gdb) display
-(gdb) print &lt;expr&gt;
-(gdb) print *array@len
-(gdb) info locals
-(gdb) info args
+<pre class="src src-python">(pdb) b
+(pdb) display
+(pdb) print &lt;expr&gt;
+(pdb) retval
+(pdb) args
+</pre>
+</div>
+<p>
+执行Python指令
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">(pdb) !n=3
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-12" class="outline-1 step slide"  data-x="-4232.54157349" data-y="0.00000000" data-z="-7655.02691682" data-rotate-x="-180.00000000" data-rotate-y="-10.00000000" data-rotate-z="-180.00000000">
-<h1 id="sec-12">GDB(5)反向调试</h1>
+
+<div id="outline-container-sec-12" class="outline-1 step slide"  data-x="5547.76499202" data-y="5554.75872394" data-z="-3243.79904515" data-rotate-x="146.33033336" data-rotate-y="69.64582744" data-rotate-z="-66.34783798">
+<h1 id="sec-12">PDB(10)神奇的commands</h1>
 <div class="outline-text-2" id="text-12">
 <p>
-首先要记录程序运行过程
+每次中断时自动执行指令序列
 </p>
 <div class="org-src-container">
 
-<pre class="src src-gdb">(gdb) b main
-(gdb) record
-</pre>
-</div>
-<p>
-然后就可以反向运行了^_^
-</p>
-<div class="org-src-container">
-
-<pre class="src src-gdb">(gdb) reverse-next
-(gdb) reverse-step
-(gdb) reverse-continue
+<pre class="src src-python">(pdb) commands [bpnumber]
+(com) ...
+(com) ...
+(com) end
+(pdb)
 </pre>
 </div>
 </div>

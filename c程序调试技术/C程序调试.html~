@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <title>C程序调试技术</title>
-<!-- 2014-11-15 六 23:27 -->
+<!-- 2014-11-15 六 23:24 -->
 <meta  charset="utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="viewport" content="width=1024" />
@@ -152,7 +152,7 @@ for the JavaScript code in this tag.
 <h1>C程序调试技术</h1>
 <div id="postamble" class="status">
 <p class="author">Author: 王鹿鸣</p>
-<p class="date">Created: 2014-11-15 六 23:27</p>
+<p class="date">Created: 2014-11-15 六 23:24</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
