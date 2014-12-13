@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>高质量编程</title>
+<!-- 2014-12-12 五 22:32 -->
+<meta  charset="utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="viewport" content="width=1024" />
+<meta  name="apple-mobile-web-app-capable" content="yes" />
+<meta  name="author" content="李周洋 王鹿鸣" />
+<meta  name="description" content="impress.js is a presentation tool based on the power of CSS3 transforms and transitions in modern browsers and inspired by the idea behind prezi.com."
+ />
+<link  href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic" rel="stylesheet" />
+<link  rel="shortcut icon" href="favicon.png" />
+<link  rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link  rel="stylesheet" href="resources/css/impress-demo.css" type="text/css" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="resources/css/mystyle.css" type="text/css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
+<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+<div id="impress">
+<div id="title" class="step" data-x="0" data-y="0" data-scale="1">
+<h1>高质量编程</h1>
+<div id="postamble" class="status">
+<p class="author">Author: 李周洋 王鹿鸣</p>
+<p class="date">Created: 2014-12-12 五 22:32</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</div>
+<div id="table-of-contents" class="step slide"  data-x="1087.43824796" data-y="0.00000000" data-z="-259.76538813" data-scale="1.00000000" data-rotate-x="-0.00000000" data-rotate-y="40.00000000" data-rotate-z="-0.00000000">
+<h1>Table of Contents</h1>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#/outline-container-sec-1">关于“真正的程序员”的传说</a></li>
+<li><a href="#/outline-container-sec-2">结局是。。。</a></li>
+<li><a href="#/outline-container-sec-3">结局是。。。</a></li>
+<li><a href="#/outline-container-sec-4">何谓高质量?</a></li>
+<li><a href="#/outline-container-sec-5">长行拆分</a></li>
+<li><a href="#/outline-container-sec-6">命名风格</a></li>
+<li><a href="#/outline-container-sec-7">命名风格</a></li>
+<li><a href="#/outline-container-sec-8">对自己友善一点:)</a></li>
+<li><a href="#/outline-container-sec-9">常量的使用</a></li>
+<li><a href="#/outline-container-sec-10">浮点运算</a></li>
+<li><a href="#/outline-container-sec-11">注重函数的使用</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-1 step slide"  data-x="1920.46427505" data-y="259.76538813" data-z="-958.75722022" data-rotate-x="-0.00000000" data-rotate-y="40.00000000" data-rotate-z="40.00000000">
+<h1 id="sec-1">关于“真正的程序员”的传说</h1>
+<div class="outline-text-2" id="text-1">
+
+<ol class="org-ol">
+<li>真正的程序员不写使用说明书,用户应当自己去猜想程序的功能。
+</li>
+<li>真正的程序员几乎不写代码的注释,如果注释很难写,它理所当然也很难读。
+</li>
+<li>真正的程序员不画流程图,原始人和文盲才会干这事。
+</li>
+<li>真正的程序员不看参考手册,新手和胆小鬼才会看。
+</li>
+<li>真正的程序员不写文档也不需要文档,只有看不懂程序的笨蛋才用文档。
+</li>
+<li>真正的程序员的程序不会在第一次就正确运行,但是他们愿意守着机器进行若干个30小时的调试改错。
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-1 step slide"  data-x="2753.49030214" data-y="0.00000000" data-z="-1657.74905231" data-rotate-x="-0.00000000" data-rotate-y="40.00000000" data-rotate-z="50.00000000">
+<h1 id="sec-2">结局是。。。</h1>
+<div class="outline-text-2" id="text-2">
+
+<p>
+你眼中的你的代码:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c">main()
+{
+    printf("Hello World!\n");
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-1 step slide"  data-x="3608.41536108" data-y="66.98729811" data-z="-2375.11635395" data-rotate-x="-0.00000000" data-rotate-y="40.00000000" data-rotate-z="30.00000000">
+<h1 id="sec-3">结局是。。。</h1>
+<div class="outline-text-2" id="text-3">
+
+<p>
+别人眼中的你的代码:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-c">#define _________ }
+#define ________ putchar
+#define _______ main
+#define _(a) ________(a);
+#define ______ _______(){
+#define __ ______ _(0x48)_(0x65)_(0x6C)_(0x6C)
+#define ___ _(0x6F)_(0x2C)_(0x20)_(0x77)_(0x6F)
+#define ____ _(0x72)_(0x6C)_(0x64)_(0x21)
+#define _____ __ ___ ____ _________
+#include&lt;stdio.h&gt;
+_____
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-1 step slide"  data-x="4162.86308964" data-y="610.70642209" data-z="-3179.45286967" data-rotate-x="-54.52892558" data-rotate-y="66.75681302" data-rotate-z="76.06614163">
+<h1 id="sec-4">何谓高质量?</h1>
+<div class="outline-text-2" id="text-4">
+<ol class="org-ol">
+<li>可读性
+<div class="org-src-container">
+
+<pre class="src src-c">//写这段代码的时候，只有上帝和我知道它是干嘛的
+//现在，只有上帝知道
+</pre>
+</div>
+</li>
+<li>可扩展性
+</li>
+<li>可维护性
+</li>
+<li>健壮性
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-1 step slide"  data-x="5180.12082795" data-y="154.65925787" data-z="-3264.35091357" data-rotate-x="-3.16081037" data-rotate-y="83.94806442" data-rotate-z="25.66464332">
+<h1 id="sec-5">长行拆分</h1>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>bad
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-python">def check_something(a):
+    if asdfgh[0]!=asdfgh[1] and asdfgh[1]!=asdfgh[2] and asdfgh[2]!=asdfgh[3] and asdfgh[3]!=asdfgh[4]:
+        pass
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>good
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-python">def check_something(asdfgh):
+    if (asdfgh[0]!=asdfgh[1] and
+        asdfgh[1]!=asdfgh[2] and
+        asdfgh[2]!=asdfgh[3] and
+        asdfgh[3]!=asdfgh[4]):
+        pass
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-6" class="outline-1 step slide"  data-x="5271.59721689" data-y="811.12297304" data-z="-4164.73275531" data-rotate-x="-3.16081037" data-rotate-y="83.94806442" data-rotate-z="65.66464332">
+<h1 id="sec-6">命名风格</h1>
+<div class="outline-text-2" id="text-6">
+<ol class="org-ol">
+<li>不要用单字符l,o命名，在一些字体种l,o和0,1无法区分
+</li>
+<li>选择有意义的名字，除循环外尽量避免单字母
+<ul class="org-ul">
+<li>bad
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-c">int y,m,d;
+</pre>
+</div>
+<ul class="org-ul">
+<li>good
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-c">int year,month,day;
+</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-1 step slide"  data-x="5446.96568215" data-y="1797.24633731" data-z="-4661.52910376" data-rotate-x="-100.67062276" data-rotate-y="71.67977884" data-rotate-z="162.20499256">
+<h1 id="sec-7">命名风格</h1>
+<div class="outline-text-2" id="text-7">
+
+<ol class="org-ol">
+<li>尽量不要使用通用的单词命名
+<ul class="org-ul">
+<li>bad
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-python">def check(number)
+</pre>
+</div>
+<ul class="org-ul">
+<li>good
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-python">def is_prime(number)
+</pre>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-1 step slide"  data-x="5428.83767514" data-y="2786.95934246" data-z="-5181.27860381" data-rotate-x="-107.16052264" data-rotate-y="61.99680590" data-rotate-z="168.19411329">
+<h1 id="sec-8">对自己友善一点:)</h1>
+<div class="outline-text-2" id="text-8">
+<ul class="org-ul">
+<li>bad
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-c">d = (a=b+c) + r;
+</pre>
+</div>
+<ul class="org-ul">
+<li>good
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-c">a = b + c;
+d = a + r
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-1 step slide"  data-x="6103.17173608" data-y="2671.42469200" data-z="-6065.54401577" data-rotate-x="-88.16456169" data-rotate-y="58.52047242" data-rotate-z="151.65578958">
+<h1 id="sec-9">常量的使用</h1>
+<div class="outline-text-2" id="text-9">
+
+<ul class="org-ul">
+<li>C语言
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-c">#define MAX_N 1000
+#define PI 3.14
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Python语言
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-python">MAX_N = 1000
+PI = 3.14
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-1 step slide"  data-x="6258.49562110" data-y="3706.37457083" data-z="-6458.93089794" data-rotate-x="-76.04508991" data-rotate-y="66.87893517" data-rotate-z="140.84924105">
+<h1 id="sec-10">浮点运算</h1>
+<div class="outline-text-2" id="text-10">
+<p>
+要避免将浮点变量用“==”或“!=”与数字比较,应该设法转化成“&gt;=”或“&lt;=”形式
+</p>
+<div class="org-src-container">
+
+<pre class="src src-c">if (x == 0.0)
+// 隐含错误的比较
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-c">if ((x&gt;=-EPSINON) &amp;&amp; (x&lt;=EPSINON))
+其中 EPSINON 是允许的误差(即精度)
+</pre>
+</div>
+<p>
+建议：尽量避免浮点运算
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-1 step slide"  data-x="6037.82912206" data-y="4692.97242527" data-z="-6936.35206400" data-rotate-x="-95.45298413" data-rotate-y="49.46981438" data-rotate-z="157.57304578">
+<h1 id="sec-11">注重函数的使用</h1>
+<div class="outline-text-2" id="text-11">
+<p>
+将功能尽量拆分为函数
+</p>
+<div class="org-src-container">
+
+<pre class="src src-c">int is_prime=1;
+for (i = 2; i&lt; number-1; i++){
+    if (number % i == 0){
+        is_prime=0;
+        break;
+    }
+}
+if (is_prime) //do something
+</pre>
+</div>
+<div class="org-src-container">
+
+<pre class="src src-python">if is_prime():
+    # do something
+</pre>
+</div>
+<p>
+每个函数最好不超过30行
+</p>
+</div>
+</div>
+</div>
+<div class="hint">
+    <p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+if ("ontouchstart" in document.documentElement) {
+document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+}
+</script>
+<script src="resources/js/impress.js"></script>
+<script>impress().init();</script>
+</body>
+</html>

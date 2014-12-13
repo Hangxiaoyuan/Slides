@@ -1,0 +1,209 @@
+#+TITLE: 高质量编程
+#+AUTHOR: 李周洋 王鹿鸣
+#+OPTIONS: num:nil ^:nil
+#+IMPRESSJS_STYLE: resources/css/impress-demo.css
+#+IMPRESSJS_SRC: resources/js/impress.js
+#+HTML_HEAD: <link rel="stylesheet" href="resources/css/mystyle.css" type="text/css" />
+#+IMPRESSJS_TOC: trans-x:1000 trans-z:500 rotate-y:40 class:slide
+* 关于“真正的程序员”的传说
+  :PROPERTIES:
+  :rotate-z: 40
+  :trans-x:  1000
+  :trans-y:  500
+  :END:
+
+  1. 真正的程序员不写使用说明书,用户应当自己去猜想程序的功能。
+  2. 真正的程序员几乎不写代码的注释,如果注释很难写,它理所当然也很难读。
+  3. 真正的程序员不画流程图,原始人和文盲才会干这事。
+  4. 真正的程序员不看参考手册,新手和胆小鬼才会看。
+  5. 真正的程序员不写文档也不需要文档,只有看不懂程序的笨蛋才用文档。
+  6. 真正的程序员的程序不会在第一次就正确运行,但是他们愿意守着机器进行若干个30小时的调试改错。
+
+* 结局是。。。
+  :PROPERTIES:
+  :rotate-z: 10
+  :trans-y:  1000
+  :trans-x:  500
+  :END:
+
+  你眼中的你的代码:
+
+  #+begin_src c
+  main()
+  {
+      printf("Hello World!\n");
+  }
+  #+end_src
+
+* 结局是。。。
+  :PROPERTIES:
+  :rotate-z: -20
+  :trans-x:  1000
+  :trans-y:  500
+  :END:
+
+  别人眼中的你的代码:
+
+  #+begin_src c
+    #define _________ }
+    #define ________ putchar
+    #define _______ main
+    #define _(a) ________(a);
+    #define ______ _______(){
+    #define __ ______ _(0x48)_(0x65)_(0x6C)_(0x6C)
+    #define ___ _(0x6F)_(0x2C)_(0x20)_(0x77)_(0x6F)
+    #define ____ _(0x72)_(0x6C)_(0x64)_(0x21)
+    #define _____ __ ___ ____ _________
+    #include<stdio.h>
+    _____
+  #+end_src
+
+* 何谓高质量?
+  :PROPERTIES:
+  :rotate-y: 40
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  1. 可读性
+     #+begin_src c
+     //写这段代码的时候，只有上帝和我知道它是干嘛的
+     //现在，只有上帝知道
+     #+end_src
+  2. 可扩展性
+  3. 可维护性
+  4. 健壮性
+
+* 长行拆分
+  :PROPERTIES:
+  :rotate-x: 20
+  :trans-z:  1000
+  :trans-y:  500
+  :END:
+  + bad
+  #+begin_src python
+  def check_something(a):
+      if asdfgh[0]!=asdfgh[1] and asdfgh[1]!=asdfgh[2] and asdfgh[2]!=asdfgh[3] and asdfgh[3]!=asdfgh[4]:
+          pass
+  #+end_src
+
+  + good
+  #+begin_src python
+  def check_something(asdfgh):
+      if (asdfgh[0]!=asdfgh[1] and
+          asdfgh[1]!=asdfgh[2] and
+          asdfgh[2]!=asdfgh[3] and
+          asdfgh[3]!=asdfgh[4]):
+          pass
+  #+end_src
+
+
+* 命名风格
+  :PROPERTIES:
+  :rotate-z: 40
+  :trans-x:  1000
+  :trans-y:  500
+  :END:
+  1. 不要用单字符l,o命名，在一些字体种l,o和0,1无法区分
+  2. 选择有意义的名字，除循环外尽量避免单字母
+     + bad
+     #+begin_src c
+     int y,m,d;
+     #+end_src
+     + good
+     #+begin_src c
+     int year,month,day;
+     #+end_src
+
+* 命名风格
+  :PROPERTIES:
+  :rotate-y: 20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+
+  3. 尽量不要使用通用的单词命名
+     + bad
+     #+begin_src python
+     def check(number)
+     #+end_src
+     + good
+     #+begin_src python
+     def is_prime(number)
+     #+end_src
+
+* 对自己友善一点:)
+  :PROPERTIES:
+  :rotate-y: 10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  + bad
+  #+begin_src c
+  d = (a=b+c) + r;
+  d = a << 3 + c;
+  #+end_src
+  + good
+  #+begin_src c
+  a = b + c;
+  d = a + r;
+  d = (a << 3) + c;
+  #+end_src
+
+* 常量的使用
+  :PROPERTIES:
+  :rotate-x: -10
+  :trans-y:  1000
+  :trans-z:  500
+  :END:
+
+  + C语言
+  #+begin_src c
+  #define MAX_N 1000
+  #define PI 3.14
+  #+end_src
+
+  + Python语言
+  #+begin_src python
+  MAX_N = 1000
+  PI = 3.14
+  #+end_src
+
+* 浮点运算
+  :PROPERTIES:
+  :rotate-y: -10
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  要避免将浮点变量用“==”或“!=”与数字比较,应该设法转化成“>=”或“<=”形式
+  #+begin_src c
+  if (x == 0.0)
+  // 隐含错误的比较
+  #+end_src
+  #+begin_src c
+  if ((x>=-EPSINON) && (x<=EPSINON))
+  其中 EPSINON 是允许的误差(即精度)
+  #+end_src
+  建议：尽量避免浮点运算
+
+* 注重函数的使用
+  :PROPERTIES:
+  :rotate-y: 20
+  :trans-x:  1000
+  :trans-z:  500
+  :END:
+  将功能尽量拆分为函数
+  #+begin_src c
+  int is_prime=1;
+  for (i = 2; i< number-1; i++){
+      if (number % i == 0){
+          is_prime=0;
+          break;
+      }
+  }
+  if (is_prime) //do something
+  #+end_src
+  #+begin_src python
+  if is_prime():
+      # do something
+  #+end_src
+  每个函数最好不超过30行
